@@ -1,0 +1,138 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Class to represent a food item
+class FoodItem {
+public:
+    string name;
+    vector<string> questions;
+    vector<string> adulterationIndicators;
+
+    FoodItem(string n, vector<string> q, vector<string> a) 
+        : name(n), questions(q), adulterationIndicators(a) {}
+
+    void checkAdulteration() {
+        cout << "\nChecking adulteration for " << name << ":\n";
+        for (size_t i = 0; i < questions.size(); ++i) {
+            string input;
+            cout << questions[i] << " (yes/no): ";
+            cin >> input;
+
+            // Convert to lowercase for case-insensitive comparison
+            for (char &c : input) c = tolower(c);
+            if (input == "yes") {
+                cout << "Adulteration detected in " << name << " due to " << adulterationIndicators[i] << ".\n";
+                return;
+            }
+        }
+        cout << "No adulteration detected in " << name << ".\n";
+    }
+};
+
+int main() {
+    vector<FoodItem> foodItems = {
+        FoodItem("Milk", 
+            {"Is there a watery texture?", "Does it smell sour?", "Is it excessively frothy?"}, 
+            {"Water content", "Bacterial growth", "Presence of detergents"}
+        ),
+        FoodItem("Honey", 
+            {"Does it crystallize too quickly?", "Is there a strong sweetness?", "Does it have an unusual color?"}, 
+            {"Sugar syrup", "Artificial sweeteners", "Coloring agents"}
+        ),
+        FoodItem("Turmeric", 
+            {"Is there an unusual brightness?", "Does it leave a stain that’s hard to clean?", "Is there a synthetic smell?"}, 
+            {"Artificial coloring", "Non-food grade dyes", "Synthetic additives"}
+        ),
+        FoodItem("Chili Powder", 
+            {"Is the color too bright?", "Does it taste sweet?", "Does it leave a gritty residue?"}, 
+            {"Brick powder", "Sugar", "Non-edible colors"}
+        ),
+        FoodItem("Coffee", 
+            {"Does it have a musty smell?", "Is there sediment?", "Is it excessively bitter?"}, 
+            {"Chicory content", "Impurities", "Excessive roasting"}
+        ),
+        FoodItem("Tea", 
+            {"Is the color too dark?", "Does it taste strange?", "Is there an unusual aroma?"}, 
+            {"Artificial coloring", "Flavoring agents", "Non-tea leaves"}
+        ),
+        FoodItem("Rice", 
+            {"Do the grains look shiny?", "Is there a chemical smell?", "Do some grains seem too light?"}, 
+            {"Plastic rice", "Chemical treatment", "Adulterated grains"}
+        ),
+        FoodItem("Wheat Flour", 
+            {"Is there a chalky texture?", "Does it smell off?", "Are there black specks?"}, 
+            {"Chalk powder", "Stale flour", "Contaminants"}
+        ),
+        FoodItem("Ghee", 
+            {"Is it overly solid?", "Does it have an unusual color?", "Is there a chemical aftertaste?"}, 
+            {"Vanaspati", "Artificial colors", "Additives"}
+        ),
+        FoodItem("Salt", 
+            {"Does it taste chalky?", "Are there unusual granules?", "Is it excessively white?"}, 
+            {"Chalk powder", "Impurities", "Iodine content alteration"}
+        ),
+        FoodItem("Ice Cream", 
+            {"Is it too hard or soft?", "Does it leave a soapy residue?", "Is it excessively sweet?"}, 
+            {"Washing powder", "Air incorporation", "Excessive sugar"}
+        ),
+        FoodItem("Basmati Rice", 
+            {"Is it too fragrant?", "Does it appear polished?", "Are the grains unusually short?"}, 
+            {"Non-Basmati rice", "Synthetic aroma", "Adulterated types"}
+        ),
+        FoodItem("Sweets", 
+            {"Do they have an unnatural color?", "Is there a metallic taste?", "Do they melt unusually?"}, 
+            {"Non-edible colors", "Synthetic sweeteners", "Low-quality ingredients"}
+        ),
+        FoodItem("Lentils", 
+            {"Are there odd colors?", "Do they have an artificial sheen?", "Do they smell strange?"}, 
+            {"Artificial color", "Preservatives", "Adulterants"}
+        ),
+        FoodItem("Vegetables", 
+            {"Are they overly shiny?", "Is there a strange taste?", "Do they seem too uniform?"}, 
+            {"Artificial ripening agents", "Chemical coatings", "Uniformity from farming practices"}
+        ),
+        FoodItem("Fruits", 
+            {"Do they have a waxy coating?", "Is there an artificial smell?", "Do they taste unusually sweet?"}, 
+            {"Wax coatings", "Artificial ripening agents", "Excessive sugar content"}
+        ),
+        FoodItem("Meat", 
+            {"Is the color too bright?", "Does it have an unusual odor?", "Is it overly firm?"}, 
+            {"Preservatives", "Coloring agents", "Chemical treatments"}
+        ),
+        FoodItem("Fish", 
+            {"Does it smell strong or off?", "Is the texture too mushy?", "Does it have an unnatural shine?"}, 
+            {"Formalin", "Spoilage", "Chemical preservatives"}
+        ),
+        FoodItem("Mustard Oil", 
+            {"Does it smell too pungent?", "Is there a cloudiness?", "Does it taste unusually bitter?"}, 
+            {"Argemone oil", "Adulterants", "Poor quality"}
+        ),
+        FoodItem("Paneer", 
+            {"Does it have an unusual texture?", "Is there a sour smell?", "Does it taste overly salty?"}, 
+            {"Stale milk", "Acidic agents", "Excess salt"}
+        )
+    };
+
+    cout << "Select a food item to check for adulteration:\n";
+    for (size_t i = 0; i < foodItems.size(); ++i) {
+        cout << i + 1 << ". " << foodItems[i].name << "\n";
+    }
+
+    int choice;
+    cout << "Enter the number of your choice: ";
+    cin >> choice;
+
+    // Validate input
+    if (choice < 1 || choice > foodItems.size()) {
+        cout << "Invalid choice. Please select a number between 1 and " << foodItems.size() << ".\n";
+        return 1; // Exit with an error code
+    }
+
+    // Check for adulteration of the selected food item
+    foodItems[choice - 1].checkAdulteration();
+
+    return 0;
+}
